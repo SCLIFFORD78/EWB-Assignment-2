@@ -22,7 +22,7 @@ export class LeafletMap {
   imap: Map;
   control: LayerControl;
   overlays = {
-    Wind : L.tileLayer('http://{s}.tile.openweathermap.org/map/wind/{z}/{x}/{y}.png?appid={apiKey}', {
+/*     Wind : L.tileLayer('http://{s}.tile.openweathermap.org/map/wind/{z}/{x}/{y}.png?appid={apiKey}', {
       maxZoom: 19,
       attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
       apiKey: "f33068d3d58af2a1629e8e31ceeaddcc",
@@ -39,7 +39,7 @@ export class LeafletMap {
       attribution: 'Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
       apiKey: "f33068d3d58af2a1629e8e31ceeaddcc",
       opacity: 0.5
-    })
+    }) */
   }
 
   // https://leaflet-extras.github.io/leaflet-providers/preview/
@@ -81,7 +81,7 @@ export class LeafletMap {
   }
 
   showLayerControl() {
-    this.control = L.control.layers(this.baseLayers, this.overlays).addTo(this.imap);
+    this.control = L.control.layers(this.baseLayers, this.overlays,{collapsed:false}).addTo(this.imap);
   }
 
   showZoomControl(position = 'topleft') {
@@ -149,6 +149,10 @@ export class LeafletMap {
     }
     marker.addTo(group);
     return {location, text: popupText};
+  }
+
+  clearHives(group){
+    this.imap.removeLayer(group);
   }
 
   invalidateSize() {

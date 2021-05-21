@@ -2,15 +2,13 @@
   import { onMount, getContext } from "svelte";
   import { push } from "svelte-spa-router";
   import Coordinates from "./Coordinates.svelte";
-  import HiveInfo from "../components/HiveInfo.svelte";
+  import Filter from "../components/Filter.svelte";
 
   export let selectedHiveInfo;
-  let hive = {};
-  let errorMessage = "";
-  let selectedType = 0;
-  let type = ["All", "Super", "National", "Langstroth", "Top Bar", "Warré"];
   let filter = [];
-  let hiveList;
+  let errorMessage = "";
+  let hives = [];
+  
 
   const hiveTracker = getContext("HiveTracker");
 
@@ -22,114 +20,16 @@
       errorMessage = "Hive not found!";
     }
     push("/HiveDetail");
-  }
+  };
 
-  
-  onMount(async () => {
-    hiveList = await hiveTracker.getHives();
-    for (var i = 0; i < hiveList.length; i++) {
-      var owner = await hiveTracker.getUser(hiveList[i].owner);
-      if (owner) {
-        hiveList[i].owner = owner.firstName.concat(" ", owner.lastName);
-      }
-    }
-    filter = hiveList;
-  });
-
-  function select() {
-    console.log(selectedType);
-    filter = hiveList;
-    if (hiveList) {
-      
-      var match;
-      if (selectedType > 0) {
-        filter = [];
-        for (var j = 1; j < type.length; j++) {
-          if (selectedType == j) {
-            match = type[j];
-          }
-        }
-        console.log(match);
-        for (var i = 0; i < hiveList.length; i++) {
-          if (hiveList[i].hiveType == match) {
-            filter.push(hiveList[i]);
-          }
-        }
-      }
-      console.log(filter);
-    }
+  function expFilter(){
+    hives = filter
   }
 </script>
 
+<Filter {expFilter} bind:filter={filter}/>
 <h3 class="uk-heading-divider">Hive List</h3>
-<div class="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-  <label
-    ><input
-      bind:group={selectedType}
-      value={0}
-      class="uk-radio"
-      type="radio"
-      name="type"
-      on:change={select}
-    />
-    {type[0]}
-  </label><br />
-  <label
-    ><input
-      bind:group={selectedType}
-      value={1}
-      class="uk-radio"
-      type="radio"
-      name="type"
-      on:change={select}
-    />
-    {type[1]}
-  </label><br />
-  <label
-    ><input
-      bind:group={selectedType}
-      value={2}
-      class="uk-radio"
-      type="radio"
-      name="type"
-      on:change={select}
-    />
-    {type[2]}
-  </label><br />
-  <label
-    ><input
-      bind:group={selectedType}
-      value={3}
-      class="uk-radio"
-      type="radio"
-      name="type"
-      on:change={select}
-    />
-    {type[3]}
-  </label><br />
-  <label
-    ><input
-      bind:group={selectedType}
-      value={4}
-      class="uk-radio"
-      type="radio"
-      name="type"
-      on:change={select}
-    />
-    {type[4]}
-  </label><br />
-  <label
-    ><input
-      bind:group={selectedType}
-      value={5}
-      class="uk-radio"
-      type="radio"
-      name="type"
-      on:change={select}
-    />
-    {type[5]}
-  </label><br />
-</div>
+
 <div class="uk-table uk-table-divider">
   <table class="uk-table">
     <thead>
