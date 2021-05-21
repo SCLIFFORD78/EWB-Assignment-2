@@ -4,7 +4,10 @@ import {user} from "../stores";
 
 export class HiveTracker {
   hiveList = [];
+  selectedHive = [];
   baseUrl = "";
+
+  
 
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
@@ -17,13 +20,14 @@ export class HiveTracker {
     try {
       const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {email, password});
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+      console.log(response.data.token);
       if (response.data.success) {
         user.set({
           email: email,
           token: response.data.token
         });
-        localStorage.hive = JSON.stringify(response.data.token);
-        return true;
+      localStorage.hive = JSON.stringify(response.data.token);
+      return true;
       }
       return false;
     } catch (error) {
@@ -75,6 +79,16 @@ export class HiveTracker {
     }
   }
 
+  async getUserByEmail(email) {
+    try {
+      console.log("testing ", email);
+      const response = await axios.get(this.baseUrl + "/api/users/findByEmail/" + email);
+      return response.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
   async createUser(newUser) {
     try {
       const response = await axios.post(this.baseUrl + "/api/users", newUser);
@@ -115,13 +129,27 @@ export class HiveTracker {
   async getHive(id) {
     try {
       const response = await axios.get(this.baseUrl + "/api/hives/" + id);
+      this.selectedHive = [];
+      if (this.selectedHive.length == 0){
+        this.selectedHive.push(response.data);
+      }
       return response.data;
     } catch (e) {
       return null;
     }
   }
 
-  async createHive(newHive) {
+  async createHive(latitude, longtitude, hiveType, description, owner, comments ) {
+
+    const newHive = {
+      latitude: latitude,
+      longtitude: longtitude,
+      hiveType: hiveType,
+      description: description,
+      details: {comments},
+      owner: owner
+
+    }
     try {
       const response = await axios.post(this.baseUrl + "/api/hives", newHive);
       return response.data;
@@ -148,9 +176,14 @@ export class HiveTracker {
     }
   }
 
-  async addHiveComment(id) {
+  async addHiveComment(id, comment) {
+
+    const details = {
+      _id: id,
+      comment: comment
+    }
     try {
-      const response = await axios.post(this.baseUrl + "/api/hives/addComment/" + id);
+      const response = await axios.post(this.baseUrl + "/api/hives/addComment", details);
       return response.data;
     } catch (e) {
       return null;
@@ -160,6 +193,36 @@ export class HiveTracker {
   async deleteHiveComment(hive_id, comment_id) {
     try {
       const response = await axios.delete(this.baseUrl + "/api/hives/deleteComment/" + hive_id + "/" + comment_id);
+      return response.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async updateLocation(id, latitude, longtitude) {
+
+    const location = {
+      id: id,
+      latitude: latitude,
+      longtitude: longtitude
+    };
+    try {
+      const response = await axios.put(this.baseUrl + "/api/hives/updateLocation", location);
+      return response.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async getWeather(latitude, longtitude) {
+
+    const location = {
+      latitude: latitude,
+      longtitude: longtitude
+    }
+    try {
+
+      const response = await axios.post(this.baseUrl + "/api/hives/getWeather", location);
       return response.data;
     } catch (e) {
       return null;
@@ -182,4 +245,3 @@ export class HiveTracker {
   }
 }
 
-module.exports = HiveTracker;

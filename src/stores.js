@@ -17,8 +17,8 @@ export const welcomeBar = [
 
 export let mainBar = [
   {
-    title: "Donate",
-    icon: "fas fa-hand-holding-usd fa-3x",
+    title: "addHive",
+    icon: "fas fas fa-thumbtack fa-3x",
     colour: "color:rgb(153, 196, 74)",
     link: "/#/donate",
   },
@@ -41,10 +41,10 @@ export let mainBar = [
     link: "/#/Map",
   },
   {
-    title: "Candidates",
+    title: "Hives",
     icon: "fas fa-clipboard-list fa-3x",
     colour: "color:rgb(63, 122, 139)",
-    link: "/#/candidates",
+    link: "/#/hives",
   },
   {
     title: "Settings",
