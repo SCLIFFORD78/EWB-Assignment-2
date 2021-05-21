@@ -13,6 +13,7 @@
   import Navigator from "./components/Navigator.svelte";
   import Router from "svelte-spa-router";
   import UpdateLocation from "./pages/UpdatLocation.svelte";
+  import Gallery from "./pages/Gallery.svelte";
 
   setContext("HiveTracker", new HiveTracker("http://localhost:4000"));
 
@@ -27,7 +28,8 @@
     "/settings": Settings,
     "/logout": Main,
     "/HiveDetail": HiveDetail,
-    "/updateLocation": UpdateLocation
+    "/updateLocation": UpdateLocation,
+    "/gallery": Gallery
   }
 </script>
 

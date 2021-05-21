@@ -229,6 +229,27 @@ export class HiveTracker {
     }
   }
 
+  async gallery(id) {
+    try {
+
+      const response = await axios.get(this.baseUrl + "/api/hives/gallery/" + id);
+      return response.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async deleteImage(id) {
+    try {
+
+      const response = await axios.get(this.baseUrl + "/api/hives/deleteImage/" + id) ;
+      return response.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+
 
   async authenticate(user) {
     try {

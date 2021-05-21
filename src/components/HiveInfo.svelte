@@ -73,6 +73,10 @@
   function updateLocation(){
     push("/updateLocation");
   }
+
+  function gallery(){
+    push("/gallery");
+  }
 </script>
 
 <div
@@ -101,7 +105,7 @@
       <div class="uk-margin">
         <button 
           class="submit uk-button uk-button-primary uk-button-small uk-width-1-1"
-          
+          on:click={gallery}
           >edit Gallery
         </button>
       </div>
