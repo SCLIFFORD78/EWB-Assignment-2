@@ -81,7 +81,6 @@ export class HiveTracker {
 
   async getUserByEmail(email) {
     try {
-      console.log("testing ", email);
       const response = await axios.get(this.baseUrl + "/api/users/findByEmail/" + email);
       return response.data;
     } catch (e) {
@@ -110,9 +109,18 @@ export class HiveTracker {
   async deleteOneUser(id) {
     try {
       const response = await axios.delete(this.baseUrl + "/api/users/" + id);
-      return response.data;
+      return response;
     } catch (e) {
       return null;
+    }
+  }
+
+  async toggleAdmin(id){
+    try {
+      const response = await axios.put(this.baseUrl + "/api/users/toggleAdmin/" + id)
+      return response.statusText;
+    } catch (error) {
+      return error
     }
   }
 
@@ -133,6 +141,15 @@ export class HiveTracker {
       if (this.selectedHive.length == 0){
         this.selectedHive.push(response.data);
       }
+      return response.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async getHiveByOwner(id) {
+    try {
+      const response = await axios.get(this.baseUrl + "/api/hives/getHiveByOwner/" + id);
       return response.data;
     } catch (e) {
       return null;
