@@ -3,3 +3,7 @@
 /.vscode/
 .DS_Store
 /keys
+.idea
+node_modules
+.env
+keys
