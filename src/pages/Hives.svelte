@@ -10,7 +10,7 @@
   
 
   title.set("Hive Tracker App");
-  subTitle.set("All Current Hives");
+  subTitle.set("All Current Hives Select type to filter");
   navBar.set({
     bar: mainBar
   });

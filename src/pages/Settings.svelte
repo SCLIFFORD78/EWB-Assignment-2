@@ -9,7 +9,7 @@
   const hiveTracker = getContext("HiveTracker");
 
   title.set("Hive Tracker App");
-  subTitle.set("Edit and then save your settings");
+  subTitle.set("Edit Account details");
   let loggedUser;
   let adminSelection = false;
 

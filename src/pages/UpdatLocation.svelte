@@ -1,7 +1,6 @@
 <script>
   import "leaflet/dist/leaflet.css";
   import { mainBar, navBar, subTitle, title } from "../stores";
-  import HiveForm from "../components/HiveForm.svelte";
   import { LeafletMap } from "../services/leaflet-map";
   import { getContext, onMount } from "svelte";
   import Coordinates from "../components/Coordinates.svelte";
@@ -11,11 +10,12 @@
   let latitude = 0;
   let longtitude = 0;
   let selectedHive = {};
-  let success;
+  let successMove = false;
   let buttonVal = "UPDATE HIVE LOCATION"
+  let errorMessage = "";
 
   title.set("Hive Tracker App.");
-  subTitle.set("Register a Hive");
+  subTitle.set("Update Hive Location");
   navBar.set({
     bar: mainBar,
   });
@@ -30,8 +30,8 @@
     }
     const mapConfig = {
       location: { lat: latitude, lng: longtitude },
-      zoom: 11,
-      minZoom: 7,
+      zoom: 12,
+      minZoom: 4,
     };
     map = new LeafletMap("hive-map", mapConfig, "Terrain");
     map.showZoomControl();
@@ -49,19 +49,26 @@
   function dispLoc(){
     latitude = pos.location.lat;
     longtitude = pos.location.lng;
+    successMove = false;
+    errorMessage = "";
   };
 
 
   async function move() {
     latitude = pos.location.lat;
     longtitude = pos.location.lng;
-    success = await hiveTracker.updateLocation(
+    var success = await hiveTracker.updateLocation(
       selectedHive._id,
       latitude,
       longtitude
     );
     if (success){
       console.log("Update Successful")
+      errorMessage = "Location Update Successful !!"
+      successMove = true;
+      selectedHive = await hiveTracker.selectedHive[0];
+    }else{
+      errorMessage = "Location Update not successful - error occured !"
     }
   }
 </script>
@@ -78,13 +85,18 @@
  />
   </div>
   <class class="uk-container uk-margin  uk-container-large" />
+  {#if errorMessage}
+      <div class="uk-text-center uk-text-small uk-text-danger">
+        {errorMessage}
+      </div>
+  {/if}
   <div>
     <Coordinates bind:latitude bind:longtitude />
   </div>
   <button
     class="submit uk-button uk-button-primary uk-margin uk-button-large uk-width-1-1"
     on:click={move}
-    >{#if  success }
+    >{#if  successMove }
       Hive location succesfully updated / click again to update
       {:else}
       {buttonVal}

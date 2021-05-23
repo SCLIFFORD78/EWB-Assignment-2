@@ -111,7 +111,6 @@ export class LeafletMap {
         marker = event.target;
         position = marker.getLatLng();
         marker.setLatLng(new L.LatLng(position.lat, position.lng),{draggable:'true', autoPan: true});
-        //console.log(position.lat, position.lng);
         location.lat = position.lat;
         location.lng = position.lng;
         return location;
@@ -122,8 +121,7 @@ export class LeafletMap {
       position = marker.getLatLng();
 
     }
-    
-    
+
     if (popupText) {
       var popup = L.popup({ autoClose: false, closeOnClick: false });
       popup.setContent(popupText);
@@ -137,10 +135,12 @@ export class LeafletMap {
       marker.on('click', function (e) {
         push("/hives")
       });
-      
        
     }
+
+
     if (!this.overlays[layerTitle]) {
+
       group = L.layerGroup([]);
       this.overlays[layerTitle] = group;
       this.imap.addLayer(group);

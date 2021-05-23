@@ -2,7 +2,6 @@
   import { getContext, onMount } from "svelte";
   import Coordinates from "./Coordinates.svelte";
   import { user } from "../stores";
-  import addHive from "../pages/addHive.svelte"
 
   const hiveTracker = getContext("HiveTracker");
 
@@ -32,8 +31,9 @@
       longtitude,
       type[selectedType],
       description,
-      owner._id,
-      comments
+      comments,
+      owner._id
+      
     );
     if (success) {
       if (justAddedHive)
@@ -42,7 +42,7 @@
           longtitude: longtitude,
         });
     } else {
-      errorMessage = "Hive Not Added not completed - some error occurred";
+      errorMessage = "Hive Not Added hive to database -  error occurred. Ensure all fields are complete!";
     }
     }else{
       errorMessage = "Could not find user"
@@ -65,6 +65,11 @@
             <label class="uk-form-label" for="form-stacked-text"
               >ADD HIVE DETAILS</label
             >
+            {#if errorMessage}
+            <div class="uk-text-center uk-text-small uk-text-danger" >
+              {errorMessage}
+            </div>
+            {/if}
             <div class="uk-margin">
               <div class="uk-form-controls">
                 <input
@@ -77,6 +82,7 @@
                 />
               </div>
             </div>
+            <label class="uk-form-label" >Comments</label>
             <div class="uk-margin">
               <textarea
                 bind:value={comments}
@@ -142,11 +148,7 @@
               </label><br />
           </div>
         <div class=" uk-width-1-2@m">
-          {#if errorMessage}
-            <div class="uk-text-left uk-text-small">
-              {errorMessage}
-            </div>
-          {/if}
+          
         </div>
 
       <Coordinates bind:latitude bind:longtitude />

@@ -8,15 +8,11 @@
 
   const hiveTracker = getContext("HiveTracker");
 
-  
-
   export let hive = hiveTracker.selectedHive[0];
-  let errorMessage;
-
-
+  let errorMessage ="";
   let comment = "";
-  let comment_ = "";
   let myWidget;
+  let errorGallery = false;
   
 
   onMount(async () => {
@@ -27,27 +23,31 @@
     }, (error, result) => {
       if (!error && result && result.event === "success") {
         console.log('Done! Here is the image info: ', result.info);
-      }
+        errorGallery = false;
+      }else{
+        errorMessage = "!! Problem loading images from server"
+        errorGallery = true;
+      };
     }
     );
   });
 
- 
-  
-
   async function widgetOpen(){
-    console.log("trying to open widget")
+    if (!errorGallery) {
+      console.log("trying to open widget")
       myWidget.open();
+    } else {
+      errorMessage = "!! Gallery Server offline."
+    }
+    
   };
-
 
   async function addHiveComment() {
     const success = await hiveTracker.addHiveComment(hive._id, comment);
-    
     if (success) {
       hive = await hiveTracker.getHive(hive._id);
     } else {
-      errorMessage = "Donation not completed - some error occurred";
+      errorMessage = "Comment not added - error occurred";
     }
   };
 
@@ -57,25 +57,21 @@
     if (success) {
       hive = await hiveTracker.getHive(hive._id);
     } else {
-      errorMessage = "Donation not completed - some error occurred";
+      errorMessage = "Comment not removed - error occurred";
     }
   };
 
   async function deleteOneHive() {
     var deleteHive = false;
     const loggedInUser = await hiveTracker.getUserByEmail($user.email);
-    console.log(loggedInUser);
     const loggedInUserHives = await hiveTracker.getHiveByOwner(loggedInUser._id);
-    console.log(loggedInUserHives);
     loggedInUserHives.forEach(loggedInUserHive => {
-      
       if (loggedInUserHive._id == hive._id) {
         console.log(loggedInUserHive._id , hive._id);
         deleteHive = true;
         
       }
     });
-    console.log(loggedInUser.admin);
     if (deleteHive ||loggedInUser.admin) {
       const success = await hiveTracker.deleteOneHive(hive._id);
     if (success) {
@@ -83,6 +79,8 @@
     } else {
       errorMessage = "Deletion not completed - some error occurred";
     }
+    }else{
+      errorMessage = "!! Hive can only be deleted by Owner OR Admin member"
     }
     
   };
@@ -92,13 +90,23 @@
   }
 
   function gallery(){
-    push("/gallery");
+    if (!errorGallery) {
+      push("/gallery");
+    } else {
+      errorMessage = "!!  Gallery server offline"
+    }
+    
   }
 </script>
 
 <div
   class="uk-margin uk-width-2xlarge uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large uk-card-hover"
 >
+    {#if errorMessage}
+      <div class="uk-text-center uk-text-small uk-text-danger">
+        {errorMessage}
+      </div>
+    {/if}
 
     <div class="uk-margin">
       <textarea

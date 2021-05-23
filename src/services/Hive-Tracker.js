@@ -97,6 +97,21 @@ export class HiveTracker {
     }
   }
 
+  async update(firstName, lastName, email, password, id) {
+    const details = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password
+    }
+    try {
+      const response = await axios.put(this.baseUrl + "/api/users/" + id, details);
+      return response.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
   async deleteAllUsers() {
     try {
       const response = await axios.delete(this.baseUrl + "/api/users");
@@ -156,17 +171,18 @@ export class HiveTracker {
     }
   }
 
-  async createHive(latitude, longtitude, hiveType, description, owner, comments ) {
+  async createHive(latitude, longtitude, hiveType, description, comments , owner ) {
 
     const newHive = {
       latitude: latitude,
       longtitude: longtitude,
       hiveType: hiveType,
       description: description,
-      details: {comments},
+      details: {comments: comments},
       owner: owner
 
     }
+    console.log(newHive);
     try {
       const response = await axios.post(this.baseUrl + "/api/hives", newHive);
       return response.data;
@@ -225,7 +241,11 @@ export class HiveTracker {
     };
     try {
       const response = await axios.put(this.baseUrl + "/api/hives/updateLocation", location);
+      const response2 = await axios.get(this.baseUrl + "/api/hives/" + id);
       return response.data;
+      return response2.data;
+      console.log(response2.data);
+      this.selectedHive = response2.data
     } catch (e) {
       return null;
     }

@@ -15,7 +15,7 @@
     if (success) {
       push("/login");
     } else {
-      errorMessage = "Error Trying to sign up";
+      errorMessage = "Error Trying to sign up.\nCheck all fields are correct";
     }
   }
 </script>
@@ -54,7 +54,7 @@
     <button class="uk-button uk-button-primary uk-button-large uk-width-1-1">Sign up</button>
   </div>
   {#if errorMessage}
-    <div class="uk-text-left uk-text-small">
+    <div class="uk-text-center uk-text-small uk-text-danger">
       {errorMessage}
     </div>
   {/if}
