@@ -1,102 +1,112 @@
 <script>
-  import {mainBar, navBar, subTitle, title} from "../stores"
-  import Chart from 'svelte-frappe-charts';
-  import {getContext, onMount} from "svelte";
-  import addHiveForm from "../components/HiveForm.svelte";
+  import { mainBar, navBar, subTitle, title } from "../stores";
+  import Chart from "svelte-frappe-charts";
+  import { getContext, onMount } from "svelte";
+  import AdminSettingsForm from "../components/AdminSettingsForm.svelte";
 
   const hiveTracker = getContext("HiveTracker");
 
-  title.set("Donation Services Inc.");
+  title.set("Hive Tracker App.");
   subTitle.set("Analysis");
   navBar.set({
-    bar: mainBar
+    bar: mainBar,
   });
 
   let hives = [];
-  let paymentData = {
-    labels: ["super", "national"],
+  let users = [];
+  let hiveTypeData = {
+    labels: ["Super", "National", "Langstroth", "Top Bar", "Warré"],
     datasets: [
       {
-        values: [0, 0]
-      }
-    ]
+        values: [0, 0, 0, 0, 0],
+      },
+    ],
   };
 
-  let donationsData = {
-    labels: [],
+  let userData = {
+    labels: ["Admin", "User"],
     datasets: [
       {
-        values: []
-      }
-    ]
-  }
+        values: [0, 0],
+      },
+    ],
+  };
 
   let donorData = {
     labels: [],
     datasets: [
       {
-        values: []
-      }
-    ]
-  }
+        values: [],
+      },
+    ],
+  };
   async function refreshCharts() {
-    let donationList = await hiveTracker.getDonations();
+    let hiveList = await hiveTracker.getHives();
 
-    let sumPaypal = donationList.filter(donation => donation.method == "super").reduce((a, b) => ({amount: a.amount + b.amount}));
-    paymentData.datasets[0].values[0] = sumPaypal.amount;
-    let sumDirect = donationList.filter(donation => donation.method == "national").reduce((a, b) => ({amount: a.amount + b.amount}));
-    paymentData.datasets[0].values[1] = sumDirect.amount;
+    let sumSuper = 0;
+    let sumNational = 0;
+    let sumLangstroth = 0;
+    let sumTopBar = 0;
+    let sumWarré = 0;
 
-    hives.forEach((hive, i) => {
-      let total = donationList.filter(donation => donation.hive._id == hive._id).reduce((a, b) => ({amount: a.amount + b.amount}));
-      donationsData.datasets[0].values[i] = total.amount;
+    hiveList.forEach((hive) => {
+      if (hive.hiveType == "Super") {
+        sumSuper++;
+      } else if (hive.hiveType == "National") {
+        sumNational++;
+      } else if (hive.hiveType == "Langstroth") {
+        sumLangstroth++;
+      } else if (hive.hiveType == "Top Bar") {
+        sumTopBar++;
+      } else {
+        sumWarré++;
+      }
     });
+    hiveTypeData.datasets[0].values[0] = sumSuper;
+    hiveTypeData.datasets[0].values[1] = sumNational;
+    hiveTypeData.datasets[0].values[2] = sumLangstroth;
+    hiveTypeData.datasets[0].values[3] = sumTopBar;
+    hiveTypeData.datasets[0].values[4] = sumWarré;
 
-    let donors = new Map();
-    donationList.forEach(donation => {donors.set(donation.donor._id, donation.donor)})
-    let i = 0;
-    donorData.labels = [];
-    for (const [id, donor] of donors.entries()) {
-      donorData.labels.push(`${donor.lastName}, ${donor.firstName}`);
-      let sumaddHived = donationList.filter(donation => donation.donor._id == id).reduce((a, b) => ({amount: a.amount + b.amount}));
-      donorData.datasets[0].values[i] = sumaddHived.amount;
-      i++;
-    }
+    let sumAdmin = 0;
+    let sumUser = 0;
+    users.forEach((user) => {
+      if (user.admin) {
+        sumAdmin++;
+      } else {
+        sumUser++;
+      }
+      userData.datasets[0].values[0] = sumAdmin;
+      userData.datasets[0].values[1] = sumUser;
+    });
   }
 
-  function justaddHived() {
-    refreshCharts();
-  }
 
   onMount(async () => {
     hives = await hiveTracker.getHives();
-    donationsData.labels = [];
-    hives.forEach(hive => {
-      donationsData.labels.push(`${hive.lastName}, ${hive.firstName}`)
-    })
+    users = await hiveTracker.getUsers();
     await refreshCharts();
   });
 </script>
 
-<div class="uk-flex-middle uk-text-center" uk-grid>
-  <div class="uk-width-1-2@m ">
-    <div class="uk-card uk-card-default uk-card-body uk-box-shadow-large uk-width-2xlarge uk-margin">
-      <h3> Payment Methods </h3>
-      <Chart data={paymentData} type="pie"/>
-    </div>
-    <div class="uk-card uk-card-default uk-card-body uk-box-shadow-large uk-width-2xlarge uk-margin">
-      <h3> Donations by Hive </h3>
-      <Chart data={donationsData} type="bar"/>
-    </div>
-  </div>
-  <div class="uk-width-1-2@m ">
-    <div class="uk-card uk-card-default uk-card-body uk-box-shadow-large uk-width-2xlarge uk-margin">
-      <h3> Donations by Donor </h3>
-      <Chart data={donorData} type="donut"/>
-    </div>
-    <div class="uk-card uk-card-default uk-card-body uk-box-shadow-large uk-width-2xlarge uk-margin">
-      <h3> Make a Donation </h3>
-      <addHiveForm {justaddHived}/>
+<div class="uk-child-width-expand@s uk-text-center uk-height-large uk-align-center" >
+  <div>
+    <div
+      class="uk-card uk-card-default uk-card-large uk-card-body uk-box-shadow-large uk-width-2xlarge uk-margin uk-height- uk-align-center "
+    >
+      <h3>Hive Types</h3>
+      <Chart data={hiveTypeData} type="bar" />
     </div>
   </div>
 </div>
+<div class="uk-child-width-expand@s uk-text-center uk-height-large uk-align-center">
+  <div>
+    <div
+      class="uk-card uk-card-default uk-card-large uk-card-body uk-box-shadow-large uk-width-2xlarge uk-margin uk-height-large uk-align-center"
+    >
+      <h3>Types of Registered Users</h3>
+      <Chart data={userData} type="pie" />
+    </div>
+  </div>
+</div>
+

@@ -50,10 +50,10 @@
 </script>
 
 <div
-  class="uk-margin uk-width-2xlarge uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large"
+  class="uk-margin uk-width-3xlarge uk-margin-auto uk-card uk-card-default uk-card-body uk-box-shadow-large"
 >
   <table class="uk-table">
-    <caption> Member Accounts </caption>
+    <caption><h2> Member Accounts</h2> </caption>
     <thead class="uk-text-center">
       <th>Member No.</th>
       <th>email</th>

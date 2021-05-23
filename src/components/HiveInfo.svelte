@@ -1,6 +1,8 @@
 <script
   src="https://upload-widget.cloudinary.com/global/all.js"
   type="text/javascript">
+  import { user } from "../stores";
+
   import { getContext, onMount } from "svelte";
   import { push } from "svelte-spa-router";
 
@@ -60,14 +62,29 @@
   };
 
   async function deleteOneHive() {
-
-    console.log("testing delete hive " + hive._id);
-    const success = await hiveTracker.deleteOneHive(hive._id);
+    var deleteHive = false;
+    const loggedInUser = await hiveTracker.getUserByEmail($user.email);
+    console.log(loggedInUser);
+    const loggedInUserHives = await hiveTracker.getHiveByOwner(loggedInUser._id);
+    console.log(loggedInUserHives);
+    loggedInUserHives.forEach(loggedInUserHive => {
+      
+      if (loggedInUserHive._id == hive._id) {
+        console.log(loggedInUserHive._id , hive._id);
+        deleteHive = true;
+        
+      }
+    });
+    console.log(loggedInUser.admin);
+    if (deleteHive ||loggedInUser.admin) {
+      const success = await hiveTracker.deleteOneHive(hive._id);
     if (success) {
       push("/hives")
     } else {
       errorMessage = "Deletion not completed - some error occurred";
     }
+    }
+    
   };
 
   function updateLocation(){
