@@ -88,7 +88,7 @@ async function init() {
     redirectTo: "/",
   });
   server2.auth.strategy("jwt", "jwt", {
-    key: "secretpasswordnotrevealedtoanyone",
+    key: process.env.secret,
     validate: utils.validate,
     verifyOptions: { algorithms: ["HS256"] },
   });
