@@ -19,6 +19,14 @@ const hiveSchema = new Schema({
     ref: "User",
   }
 });
+
+hiveSchema.methods.comparePassword = async function(candidatePassword) {          
+  const isMatch = await bcrypt.compare(candidatePassword, this.password);         
+  if (!isMatch) {
+    throw Boom.unauthorized('Password mismatch');
+  }
+  return this;
+};
 hiveSchema.plugin(autoIncrement.plugin, {model: 'Hive', field:'hiveNumber'});
 
 

@@ -1,5 +1,5 @@
 "use strict";
-const { logger } = require("handlebars");
+
 const Hive = require("../models/hive");
 const User = require("../models/user");
 const Cloudinary = require("../utils/cloudinary");
