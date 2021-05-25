@@ -103,6 +103,7 @@ async function init() {
   await server2.start();
   //console.log(`Server running at: ${server.info.uri}`);
   console.log(`Server running at: ${server2.info.uri}`);
+  
 }
 
 process.on("unhandledRejection", (err) => {
@@ -111,5 +112,5 @@ process.on("unhandledRejection", (err) => {
 });
 
 //server.validator(require("@hapi/joi"));
-
+module.exports.init = init
 init();
