@@ -1,5 +1,5 @@
 <script>
-  import "leaflet/dist/leaflet.css";
+  //import "leaflet/dist/leaflet.css";
   import { mainBar, navBar, subTitle, title } from "../stores";
   import HiveForm from "../components/HiveForm.svelte";
   import { LeafletMap } from "../services/leaflet-map";
