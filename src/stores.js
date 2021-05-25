@@ -17,7 +17,7 @@ export const welcomeBar = [
 
 export let mainBar = [
   {
-    title: "addHive",
+    title: "Add Hive",
     icon: "fas fas fa-thumbtack fa-3x",
     colour: "color:rgb(153, 196, 74)",
     link: "/#/donate",
@@ -29,13 +29,13 @@ export let mainBar = [
     link: "/#/analysis",
   },
   {
-    title: "Donation Map",
+    title: "Hives Map",
     icon: "fas fa-map-marked-alt fa-3x",
     colour: "rgb(102, 153, 255)",
     link: "/#/Map",
   },
   {
-    title: "Hives",
+    title: "Hives List",
     icon: "fas fa-clipboard-list fa-3x",
     colour: "color:rgb(63, 122, 139)",
     link: "/#/hives",
