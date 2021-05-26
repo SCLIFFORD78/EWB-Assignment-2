@@ -18,7 +18,6 @@
   onMount(async () => {
     try {
       weather = await hiveTracker.getWeather(hive.latitude, hive.longtitude);
-      console.log(weather);
     } catch (error) {
       errorMessage = "Weather Details unavailable";
       console.log(error);

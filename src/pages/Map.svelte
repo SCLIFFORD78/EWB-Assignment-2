@@ -33,7 +33,6 @@
           const hiveStr = `Hive No.${hive.hiveNumber.toString()}`;
 
           marker = map.addMarker({lat: hive.latitude, lng: hive.longtitude}, hiveStr, hive.hiveType, false);
-          console.log(hive.hiveType);
         }
       });
       

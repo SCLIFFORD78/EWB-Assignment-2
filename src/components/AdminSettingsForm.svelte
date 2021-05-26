@@ -7,7 +7,6 @@
 
   onMount(async () => {
     allUsers = await hiveTracker.getUsers();
-    console.log(allUsers[0]);
   });
 
   async function save() {
