@@ -1,5 +1,5 @@
 <script>
-  import 'leaflet/dist/leaflet.css';
+  //import 'leaflet/dist/leaflet.css';
   import {mainBar, navBar, subTitle, title} from "../stores"
   import {LeafletMap} from '../services/leaflet-map';
   import {getContext, onMount} from "svelte";
@@ -33,7 +33,6 @@
           const hiveStr = `Hive No.${hive.hiveNumber.toString()}`;
 
           marker = map.addMarker({lat: hive.latitude, lng: hive.longtitude}, hiveStr, hive.hiveType, false);
-          console.log(hive.hiveType);
         }
       });
       

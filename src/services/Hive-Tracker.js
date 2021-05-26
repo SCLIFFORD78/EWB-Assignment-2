@@ -20,7 +20,6 @@ export class HiveTracker {
     try {
       const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {email, password});
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
-      console.log(response.data.token);
       if (response.data.success) {
         user.set({
           email: email,
@@ -182,7 +181,6 @@ export class HiveTracker {
       owner: owner
 
     }
-    console.log(newHive);
     try {
       const response = await axios.post(this.baseUrl + "/api/hives", newHive);
       return response.data;
@@ -244,7 +242,6 @@ export class HiveTracker {
       const response2 = await axios.get(this.baseUrl + "/api/hives/" + id);
       return response.data;
       return response2.data;
-      console.log(response2.data);
       this.selectedHive = response2.data
     } catch (e) {
       return null;
@@ -278,8 +275,8 @@ export class HiveTracker {
 
   async deleteImage(id) {
     try {
-
-      const response = await axios.get(this.baseUrl + "/api/hives/deleteImage/" + id) ;
+      console.log(id);
+      const response = await axios.delete(this.baseUrl + "/api/hives/deleteImage/" + id) ;
       return response.data;
     } catch (e) {
       return null;

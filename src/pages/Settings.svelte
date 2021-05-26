@@ -25,12 +25,10 @@
 
   function ownAccount() {
     adminSelection = true;
-    console.log(adminSelection);
   }
 
   function adminAccount() {
     adminSelection = false;
-    console.log(adminSelection);
   }
 
   navBar.set({

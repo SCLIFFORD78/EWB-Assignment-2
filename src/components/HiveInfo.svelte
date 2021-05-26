@@ -16,6 +16,7 @@
   
 
   onMount(async () => {
+    errorGallery = false
     hive = hiveTracker.selectedHive[0];
     myWidget = cloudinary.createUploadWidget({
     cloudName: 'digabwjfx',
@@ -24,10 +25,7 @@
       if (!error && result && result.event === "success") {
         console.log('Done! Here is the image info: ', result.info);
         errorGallery = false;
-      }else{
-        errorMessage = "!! Problem loading images from server"
-        errorGallery = true;
-      };
+      }
     }
     );
   });
@@ -67,7 +65,6 @@
     const loggedInUserHives = await hiveTracker.getHiveByOwner(loggedInUser._id);
     loggedInUserHives.forEach(loggedInUserHive => {
       if (loggedInUserHive._id == hive._id) {
-        console.log(loggedInUserHive._id , hive._id);
         deleteHive = true;
         
       }
@@ -149,7 +146,7 @@
 
 
 
-    >
+    
       <div class="uk-margin">
         <button
           class="submit uk-button uk-button-primary uk-button-small uk-width-1-1"
