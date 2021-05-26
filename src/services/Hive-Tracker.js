@@ -276,8 +276,8 @@ export class HiveTracker {
 
   async deleteImage(id) {
     try {
-
-      const response = await axios.get(this.baseUrl + "/api/hives/deleteImage/" + id) ;
+      console.log(id);
+      const response = await axios.delete(this.baseUrl + "/api/hives/deleteImage/" + id) ;
       return response.data;
     } catch (e) {
       return null;
