@@ -18,19 +18,13 @@
     } catch (error) {
       console.log(error);
     }
-    allImages.forEach(image=>{
-      console.log(image);
 
-    });
 
   });
 
   async function deleteImage(image) {
     const id = image.target.value;
-    console.log(id);
     const delPic = await hiveTracker.deleteImage(id);
-    const test = document.getElementById("pid");
-    console.log("testing for butter" + test);
   }
 </script>
 

@@ -41,7 +41,6 @@
             match = type[j];
           }
         }
-        console.log(match);
         for (var i = 0; i < hiveList.length; i++) {
           if (hiveList[i].hiveType == match) {
             filter.push(hiveList[i]);

@@ -67,7 +67,6 @@
     const loggedInUserHives = await hiveTracker.getHiveByOwner(loggedInUser._id);
     loggedInUserHives.forEach(loggedInUserHive => {
       if (loggedInUserHive._id == hive._id) {
-        console.log(loggedInUserHive._id , hive._id);
         deleteHive = true;
         
       }

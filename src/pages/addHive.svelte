@@ -28,7 +28,6 @@
     );
   });
   function dispLoc(){
-    console.log(pos);
     latitude = pos.location.lat;
     longtitude = pos.location.lng;
   };

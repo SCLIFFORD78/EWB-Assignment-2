@@ -20,7 +20,6 @@ export class HiveTracker {
     try {
       const response = await axios.post(`${this.baseUrl}/api/users/authenticate`, {email, password});
       axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
-      console.log(response.data.token);
       if (response.data.success) {
         user.set({
           email: email,
@@ -244,7 +243,6 @@ export class HiveTracker {
       const response2 = await axios.get(this.baseUrl + "/api/hives/" + id);
       return response.data;
       return response2.data;
-      console.log(response2.data);
       this.selectedHive = response2.data
     } catch (e) {
       return null;
