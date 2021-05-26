@@ -181,7 +181,6 @@ export class HiveTracker {
       owner: owner
 
     }
-    console.log(newHive);
     try {
       const response = await axios.post(this.baseUrl + "/api/hives", newHive);
       return response.data;
