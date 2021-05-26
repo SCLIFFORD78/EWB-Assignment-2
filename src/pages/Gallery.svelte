@@ -123,6 +123,7 @@
     <button
         class="uk-button uk-button-danger uk-button-large uk-width-1-1"
         on:click={deleteImage}
+        onclick="return confirm('Are you sure you want to delete image(s)?')"
         ><span uk-icon="icon: trash" />
       </button>
   </div>

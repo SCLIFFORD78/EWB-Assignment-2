@@ -134,6 +134,7 @@
       <div class="uk-margin">
         <button class="uk-button uk-button-danger uk-button-small uk-width-1-1"
         on:click={deleteOneHive}
+        onclick="return confirm('Are you sure you want to delete hive CANNOT be undone!')"
           >Delete Hive
         </button>
 
@@ -181,6 +182,7 @@
                 
                 <button  class="uk-button uk-button-danger uk-button-small uk-width-1-1"
                 on:click={deleteHiveComment} value={detail._id}
+                onclick="return confirm('Are you sure you want to delete comment?')"
                   >Delete Comment
                 </button>
 
