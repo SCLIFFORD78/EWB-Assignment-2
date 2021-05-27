@@ -1,14 +1,45 @@
-# Svelte + Vite
+# Enterprise Web Development Assignment 2
 
-This template should help get you started developing with Svelte in Vite.
+A Web App created for bee club members to track locations , data, history and health of hives. Useful for clbs to quantify bee hive populations and dispersion
+
+This Application is running here:
+
+netlify: https://bba-hive-tracker.netlify.app
 
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
 
-## Need an official Svelte framework?
+## Building
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+Clone the repo:
+
+```
+git clone https://github.com/SCLIFFORD78/EWB-Assignment-2.git
+
+```
+
+Backend server requires
+
+```
+git clone https://github.com/SCLIFFORD78/EWB-Assignment-1.git (required to seve this front end App)
+
+```
+
+From within the project install dependencies:
+
+```
+npm install
+
+```
+
+To run the application, execute the following from within the project folder:
+
+```
+npm run dev
+
+```
+# Below find listed some Technical considerations
 
 ## Technical considerations
 
