@@ -8,26 +8,26 @@
   let filter = [];
   let errorMessage = "";
   let hives = [];
-  
 
   const hiveTracker = getContext("HiveTracker");
 
   async function selectedHive(hive) {
-    const selectedHive = await hiveTracker.getHive(hive.target.value);
-    if (selectedHive) {
-      selectedHiveInfo = selectedHive;
-    } else {
-      errorMessage = "Hive not found!";
-    }
-    push("/HiveDetail");
-  };
+    await hiveTracker.getHive(hive.target.value).then((selectedHive) => {
+      if (selectedHive) {
+        selectedHiveInfo = selectedHive;
+      } else {
+        errorMessage = "Hive not found!";
+      }
+      push("/HiveDetail");
+    });
+  }
 
-  function expFilter(){
-    hives = filter
+  function expFilter() {
+    hives = filter;
   }
 </script>
 
-<Filter {expFilter} bind:filter={filter}/>
+<Filter {expFilter} bind:filter />
 <h3 class="uk-heading-divider">Hive List</h3>
 
 <div class="uk-table uk-table-divider">
@@ -42,14 +42,14 @@
       {#if filter}
         {#each filter as hive}
           <tr>
-            <td>{hive.hiveNumber}</td>
-            <td>{hive.hiveType}</td>
-            <td> {hive.owner} </td>
+            <td>{hive.fbId}</td>
+            <td>{hive.type}</td>
+            <td> {hive.user} </td>
             <td>
               <button
                 class="submit uk-button uk-button-primary uk-button-small uk-width-1-1"
                 on:click={selectedHive}
-                value={hive._id}
+                value={hive.fbId}
                 >Select
               </button>
             </td>

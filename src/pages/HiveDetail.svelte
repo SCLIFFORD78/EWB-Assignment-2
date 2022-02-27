@@ -14,10 +14,11 @@
     bar: mainBar,
   });
   const hive = hiveTracker.selectedHive[0];
+  console.log(hive)
 
   onMount(async () => {
     try {
-      weather = await hiveTracker.getWeather(hive.latitude, hive.longtitude);
+      weather = await hiveTracker.getWeather(hive.location.lat, hive.location.lng);
     } catch (error) {
       errorMessage = "Weather Details unavailable";
       console.log(error);
@@ -30,7 +31,7 @@
     <div
       class="uk-card uk-card-default uk-card-hover uk-card-body uk-margin uk-column-1-4"
     >
-      <h3 class="uk-card-title">Hive Number: {hive.hiveNumber}</h3>
+      <h3 class="uk-card-title">Hive Number: {hive.fbId}</h3>
       <p>FeelsLike: {weather.feelsLike} Celcus</p>
       <p>Cloud Cover: {weather.clouds}</p>
       <p>Wind Speed: {weather.windSpeed} Kph</p>

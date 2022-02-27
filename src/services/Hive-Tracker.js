@@ -80,8 +80,14 @@ export class HiveTracker {
 
   async getUserByEmail(email) {
     try {
-      const response = await axios.get(this.baseUrl + "/api/users/findByEmail/" + email);
-      return response.data;
+      var headers = {'headers': {
+        'Content-Type': 'text/plain', 
+        'Authorization': 'Bearer '+JSON.parse(localStorage.hive)}
+        };
+      console.log(headers);
+      //axios.defaults.headers.common["Authorization"] = "Bearer " + JSON.parse(localStorage.hive);
+      const response = await axios(`${this.baseUrl}/api/users/findByEmail/` + email)
+      return response;
     } catch (e) {
       return null;
     }

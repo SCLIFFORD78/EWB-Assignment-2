@@ -29,10 +29,10 @@
     hives = await hiveTracker.getHives();
     hives.forEach(hive=>{
       types.forEach(type => {
-        if (hive.hiveType == type) {
-          const hiveStr = `Hive No.${hive.hiveNumber.toString()}`;
+        if (hive.type == type) {
+          const hiveStr = `Hive No.${hive.fbId.toString()}`;
 
-          marker = map.addMarker({lat: hive.latitude, lng: hive.longtitude}, hiveStr, hive.hiveType, false);
+          marker = map.addMarker({lat: hive.location.lat, lng: hive.location.lng}, hiveStr, hive.type, false);
         }
       });
       

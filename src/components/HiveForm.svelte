@@ -17,7 +17,7 @@
   let owner = {};
 
   onMount(async () => {
-
+    console.log(user)
     owner = await hiveTracker.getUserByEmail( $user.email);
     if (!owner){
       console.log("owner not found")

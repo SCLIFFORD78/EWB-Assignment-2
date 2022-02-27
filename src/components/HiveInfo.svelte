@@ -9,6 +9,7 @@
   const hiveTracker = getContext("HiveTracker");
 
   export let hive = hiveTracker.selectedHive[0];
+  console.log(hive)
   let errorMessage ="";
   let comment = "";
   let myWidget;
@@ -18,9 +19,10 @@
   onMount(async () => {
     errorGallery = false
     hive = hiveTracker.selectedHive[0];
+    console.log(hive)
     myWidget = cloudinary.createUploadWidget({
     cloudName: 'digabwjfx',
-    uploadPreset: hive._id
+    uploadPreset: hive.fbId
     }, (error, result) => {
       if (!error && result && result.event === "success") {
         console.log('Done! Here is the image info: ', result.info);
@@ -41,9 +43,9 @@
   };
 
   async function addHiveComment() {
-    const success = await hiveTracker.addHiveComment(hive._id, comment);
+    const success = await hiveTracker.addHiveComment(hive.fbId, comment);
     if (success) {
-      hive = await hiveTracker.getHive(hive._id);
+      hive = await hiveTracker.getHive(hive.fbId);
     } else {
       errorMessage = "Comment not added - error occurred";
     }
@@ -51,9 +53,9 @@
 
   async function deleteHiveComment(comment_id) {
     const _id = comment_id.target.value;
-    const success = await hiveTracker.deleteHiveComment(hive._id, _id);
+    const success = await hiveTracker.deleteHiveComment(hive.fbId, _id);
     if (success) {
-      hive = await hiveTracker.getHive(hive._id);
+      hive = await hiveTracker.getHive(hive.fbId);
     } else {
       errorMessage = "Comment not removed - error occurred";
     }
@@ -70,7 +72,7 @@
       }
     });
     if (deleteHive ||loggedInUser.admin) {
-      const success = await hiveTracker.deleteOneHive(hive._id);
+      const success = await hiveTracker.deleteOneHive(hive.fbId);
     if (success) {
       push("/hives")
     } else {
@@ -181,7 +183,7 @@
               <div class="uk-margin">
                 
                 <button  class="uk-button uk-button-danger uk-button-small uk-width-1-1"
-                on:click={deleteHiveComment} value={detail._id}
+                on:click={deleteHiveComment} value={detail.fbId}
                 onclick="return confirm('Are you sure you want to delete comment?')"
                   >Delete Comment
                 </button>

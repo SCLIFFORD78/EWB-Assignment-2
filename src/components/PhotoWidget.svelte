@@ -10,7 +10,7 @@
   onMount(async () => {
 
   });
-  var _id = hive._id;
+  var _id = hive.fbId;
   const myGallery = cloudinary.galleryWidget({
     container: "#photos",
     cloudName: "digabwjfx",
