@@ -12,12 +12,12 @@
   onMount(async () => {
     hive = hiveTracker.selectedHive[0];
     title.set("Hive Tracker App");
-    subTitle.set("Hive " + hive.hiveNumber + " Images");
+    subTitle.set("Hive " + hive.fbId + " Images");
     navBar.set({
       bar: mainBar,
     });
     try {
-      allImages = await hiveTracker.gallery(hive._id);
+      allImages = await hiveTracker.gallery(hive.fbId);
 
     } catch (error) {
       console.log(error);
