@@ -64,9 +64,9 @@
   async function deleteOneHive() {
     var deleteHive = false;
     const loggedInUser = await hiveTracker.getUserByEmail($user.email);
-    const loggedInUserHives = await hiveTracker.getHiveByOwner(loggedInUser._id);
+    const loggedInUserHives = await hiveTracker.getHiveByOwner(loggedInUser.data.fbid);
     loggedInUserHives.forEach(loggedInUserHive => {
-      if (loggedInUserHive._id == hive._id) {
+      if (loggedInUserHive.fbId == hive.fbId) {
         deleteHive = true;
         
       }
